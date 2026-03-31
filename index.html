@@ -8,500 +8,152 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --ink: #0d0d0d;
-    --paper: #f0ece4;
-    --red: #c0392b;
-    --gray: #6b6b6b;
-    --light-gray: #d9d4c8;
-  }
-
+  :root { --ink: #0d0d0d; --paper: #f0ece4; --red: #c0392b; --gray: #6b6b6b; --light-gray: #d9d4c8; }
   html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
 
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'DM Sans', sans-serif;
-    overflow-x: hidden;
-  }
-
-  /* NOISE TEXTURE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
-  }
-
-  /* ─── HERO ─── */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 80px 60px 80px 80px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .hero-eyebrow {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 13px;
-    letter-spacing: 4px;
-    color: var(--red);
-    margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(72px, 9vw, 120px);
-    line-height: 0.9;
-    letter-spacing: -1px;
-    margin-bottom: 12px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.4s forwards;
-  }
-
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px 60px 80px 80px; position: relative; z-index: 2; }
+  .hero-eyebrow { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 4px; color: var(--red); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(72px, 9vw, 120px); line-height: 0.9; letter-spacing: -1px; margin-bottom: 12px; opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
   .hero-title .red { color: var(--red); }
+  .hero-subtitle { font-family: 'DM Sans', sans-serif; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 48px; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
+  .hero-desc { font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.8; color: #333; max-width: 460px; margin-bottom: 40px; opacity: 0; animation: fadeUp 0.8s 0.8s forwards; }
+  .hero-cta { display: inline-block; background: var(--red); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; padding: 18px 48px; margin-bottom: 40px; opacity: 0; animation: fadeUp 0.8s 0.9s forwards; transition: background 0.2s, transform 0.2s; align-self: flex-start; }
+  .hero-cta:hover { background: #a93226; transform: translateY(-2px); }
+  .hero-author { display: flex; align-items: center; gap: 16px; opacity: 0; animation: fadeUp 0.8s 1s forwards; }
+  .author-line { width: 40px; height: 1px; background: var(--red); }
+  .author-name { font-family: 'DM Sans', sans-serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+  .hero-right { position: relative; display: flex; align-items: center; justify-content: center; background: var(--ink); clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%); overflow: hidden; }
+  .hero-right::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 60% 40%, #2a1a1a 0%, #0d0d0d 70%); }
+  .book-cover-wrap { position: relative; z-index: 2; padding: 60px; opacity: 0; animation: fadeIn 1.2s 0.6s forwards; display: flex; align-items: center; justify-content: center; }
+  .book-3d { position: relative; width: 260px; height: 370px; transform-style: preserve-3d; transform: perspective(1200px) rotateY(-18deg) rotateX(3deg); transition: transform 0.5s ease; cursor: pointer; }
+  .book-3d:hover { transform: perspective(1200px) rotateY(-8deg) rotateX(1deg) scale(1.04); }
+  .book-face { position: absolute; width: 260px; height: 370px; top: 0; left: 0; }
+  .book-face img { width: 100%; height: 100%; object-fit: cover; display: block; box-shadow: -8px 8px 40px rgba(0,0,0,0.9), 4px 0 0 rgba(255,255,255,0.05) inset; }
+  .book-spine { position: absolute; width: 36px; height: 370px; top: 0; left: -36px; background: linear-gradient(to right, #111, #222); display: flex; align-items: center; justify-content: center; transform: skewY(0deg); }
+  .book-spine-text { font-family: 'Bebas Neue', sans-serif; font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.4); writing-mode: vertical-rl; transform: rotate(180deg); }
+  .book-shadow { position: absolute; bottom: -24px; left: 20px; width: 240px; height: 30px; background: radial-gradient(ellipse, rgba(0,0,0,0.7) 0%, transparent 70%); filter: blur(10px); }
+  .hero-right-text { position: absolute; bottom: 40px; left: 40px; font-family: 'Bebas Neue', sans-serif; font-size: 140px; line-height: 1; color: rgba(255,255,255,0.03); z-index: 1; user-select: none; }
 
-  .hero-subtitle {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 48px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.6s forwards;
-  }
+  /* DOAÇÃO STRIP */
+  .doacao-strip { background: var(--red); padding: 18px 80px; display: flex; align-items: center; justify-content: center; gap: 16px; }
+  .doacao-strip-text { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.95); text-align: center; letter-spacing: 0.3px; }
+  .doacao-strip-text strong { font-weight: 700; }
 
-  .hero-desc {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    line-height: 1.8;
-    color: #333;
-    max-width: 460px;
-    margin-bottom: 56px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.8s forwards;
-  }
-
-  .hero-author {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    opacity: 0;
-    animation: fadeUp 0.8s 1s forwards;
-  }
-
-  .author-line {
-    width: 40px;
-    height: 1px;
-    background: var(--red);
-  }
-
-  .author-name {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gray);
-  }
-
-  .hero-right {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--ink);
-    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%);
-    overflow: hidden;
-  }
-
-  .hero-right::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 60% 40%, #2a1a1a 0%, #0d0d0d 70%);
-  }
-
-  .book-cover-wrap {
-    position: relative;
-    z-index: 2;
-    padding: 60px 60px 60px 80px;
-    opacity: 0;
-    animation: fadeIn 1.2s 0.6s forwards;
-  }
-
-  .book-cover-img {
-    width: 260px;
-    box-shadow:
-      -20px 20px 60px rgba(0,0,0,0.8),
-      -4px 4px 0px rgba(192,57,43,0.3);
-    transform: perspective(800px) rotateY(6deg) rotateX(2deg);
-    transition: transform 0.4s ease;
-  }
-
-  .book-cover-img:hover {
-    transform: perspective(800px) rotateY(2deg) rotateX(1deg) scale(1.03);
-  }
-
-  /* Large faded text behind book */
-  .hero-right-text {
-    position: absolute;
-    bottom: 40px;
-    left: 40px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 140px;
-    line-height: 1;
-    color: rgba(255,255,255,0.03);
-    z-index: 1;
-    user-select: none;
-  }
-
-  /* ─── CTA STRIP ─── */
-  .cta-strip {
-    background: var(--ink);
-    padding: 48px 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-  }
-
-  .cta-strip-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-style: italic;
-    color: var(--paper);
-    max-width: 500px;
-    line-height: 1.5;
-  }
-
-  .btn-primary {
-    display: inline-block;
-    background: var(--red);
-    color: #fff;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 18px 48px;
-    white-space: nowrap;
-    transition: background 0.2s, transform 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-primary::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0.1);
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
+  /* CTA STRIP */
+  .cta-strip { background: var(--ink); padding: 48px 80px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+  .cta-strip-text { font-family: 'Playfair Display', serif; font-size: 22px; font-style: italic; color: var(--paper); max-width: 500px; line-height: 1.5; }
+  .btn-primary { display: inline-block; background: var(--red); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; padding: 18px 48px; white-space: nowrap; transition: background 0.2s, transform 0.2s; }
   .btn-primary:hover { background: #a93226; transform: translateY(-2px); }
-  .btn-primary:hover::after { opacity: 1; }
 
-  /* ─── SINOPSE ─── */
-  .sinopse {
-    padding: 120px 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-  }
+  /* SINOPSE */
+  .sinopse { padding: 120px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .section-label { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 5px; color: var(--red); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--light-gray); }
+  .sinopse-heading { font-family: 'Playfair Display', serif; font-size: clamp(36px, 4vw, 54px); font-weight: 900; line-height: 1.1; margin-bottom: 40px; }
+  .sinopse-heading em { font-style: italic; color: var(--red); }
+  .sinopse-autor-foto { width: 100%; max-width: 320px; aspect-ratio: 3/4; object-fit: cover; object-position: top center; display: block; filter: grayscale(15%); }
+  .sinopse-body { font-size: 16px; line-height: 1.9; color: #444; }
+  .sinopse-body p + p { margin-top: 20px; }
+  .partes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 24px 0; }
+  .parte-item { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border-left: 2px solid var(--red); background: rgba(192,57,43,0.04); }
+  .parte-num { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 2px; color: var(--red); }
+  .parte-desc { font-size: 13px; line-height: 1.5; color: #555; }
 
-  .section-label {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 12px;
-    letter-spacing: 5px;
-    color: var(--red);
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  /* NÃO É */
+  .nao-e { background: var(--ink); padding: 100px 80px; position: relative; overflow: hidden; }
+  .nao-e::before { content: '✕'; position: absolute; top: -40px; right: 40px; font-size: 320px; color: rgba(255,255,255,0.015); font-family: 'Bebas Neue', sans-serif; line-height: 1; user-select: none; }
+  .nao-e-header { text-align: center; margin-bottom: 64px; position: relative; z-index: 2; }
+  .nao-e-label { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 5px; color: rgba(255,255,255,0.3); margin-bottom: 16px; }
+  .nao-e-heading { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 52px); font-style: italic; color: #fff; line-height: 1.2; }
+  .nao-e-heading span { color: var(--red); font-style: normal; font-weight: 900; }
+  .nao-e-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; position: relative; z-index: 2; }
+  .nao-e-card { padding: 40px 36px; border: 1px solid rgba(255,255,255,0.05); transition: background 0.3s; }
+  .nao-e-card:hover { background: rgba(255,255,255,0.02); }
+  .nao-e-card::before { content: '✕'; display: block; font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--red); margin-bottom: 14px; opacity: 0.5; }
+  .nao-e-title { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 10px; }
+  .nao-e-desc { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.38); }
+  .nao-e-footer { margin-top: 64px; text-align: center; position: relative; z-index: 2; }
+  .nao-e-footer-text { font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; color: rgba(255,255,255,0.55); margin-bottom: 32px; line-height: 1.6; }
+  .nao-e-footer-text strong { color: #fff; font-style: normal; }
 
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--light-gray);
-  }
+  /* FRASES */
+  .frases { background: var(--paper); padding: 100px 80px; }
+  .frases-header { text-align: center; margin-bottom: 56px; }
+  .frases-header-label { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 5px; color: var(--red); margin-bottom: 16px; }
+  .frases-header-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; line-height: 1.2; color: var(--ink); }
+  .frases-header-title em { font-style: italic; color: var(--red); }
+  .frases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .frase-card { padding: 48px 40px; background: var(--ink); transition: transform 0.3s; }
+  .frase-card:hover { transform: translateY(-4px); }
+  .frase-card::before { content: '\201C'; display: block; font-family: 'Playfair Display', serif; font-size: 56px; color: var(--red); line-height: 1; margin-bottom: 16px; }
+  .frase-text { font-family: 'Playfair Display', serif; font-size: 18px; font-style: italic; color: rgba(255,255,255,0.85); line-height: 1.7; }
+  .frase-author { margin-top: 20px; font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 2px; color: rgba(255,255,255,0.3); text-transform: uppercase; }
 
-  .sinopse-heading {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(36px, 4vw, 54px);
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 40px;
-  }
-
-  .sinopse-heading em {
-    font-style: italic;
-    color: var(--red);
-  }
-
-  .sinopse-body {
-    font-size: 17px;
-    line-height: 1.9;
-    color: #444;
-  }
-
-  .sinopse-body p + p { margin-top: 24px; }
-
-  .sinopse-right {
-    padding-top: 40px;
-  }
-
-  /* ─── FRASES ─── */
-  .frases {
-    background: var(--ink);
-    padding: 100px 80px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .frases::before {
-    content: '"';
-    position: absolute;
-    top: -40px;
-    left: 40px;
-    font-family: 'Playfair Display', serif;
-    font-size: 400px;
-    color: rgba(255,255,255,0.03);
-    line-height: 1;
-    user-select: none;
-  }
-
-  .frases-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .frase-card {
-    padding: 48px 40px;
-    border: 1px solid rgba(255,255,255,0.06);
-    position: relative;
-    transition: background 0.3s;
-  }
-
-  .frase-card:hover { background: rgba(255,255,255,0.03); }
-
-  .frase-card::before {
-    content: '"';
-    display: block;
-    font-family: 'Playfair Display', serif;
-    font-size: 48px;
-    color: var(--red);
-    line-height: 1;
-    margin-bottom: 16px;
-  }
-
-  .frase-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-style: italic;
-    color: rgba(255,255,255,0.85);
-    line-height: 1.7;
-  }
-
-  /* ─── AUTOR ─── */
-  .autor {
-    padding: 120px 80px;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 80px;
-    align-items: center;
-  }
-
-  .autor-img-wrap {
-    position: relative;
-  }
-
-  .autor-img {
-    width: 100%;
-    max-width: 320px;
-    display: block;
-    filter: grayscale(20%);
-  }
-
-  .autor-img-wrap::after {
-    content: '';
-    position: absolute;
-    bottom: -16px;
-    right: -16px;
-    width: 100%;
-    max-width: 320px;
-    height: 100%;
-    border: 2px solid var(--red);
-    z-index: -1;
-  }
-
-  .autor-content {}
-
-  .autor-heading {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(32px, 3.5vw, 48px);
-    font-weight: 900;
-    line-height: 1.15;
-    margin-bottom: 32px;
-  }
-
-  .autor-bio {
-    font-size: 17px;
-    line-height: 1.9;
-    color: #444;
-  }
-
+  /* AUTOR */
+  .autor { padding: 120px 80px; display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: center; }
+  .autor-img-wrap { position: relative; }
+  .autor-img { width: 100%; max-width: 320px; display: block; filter: grayscale(100%); }
+  .autor-img-wrap::after { content: ''; position: absolute; bottom: -16px; right: -16px; width: 100%; max-width: 320px; height: 100%; border: 2px solid var(--red); z-index: -1; }
+  .autor-heading { font-family: 'Playfair Display', serif; font-size: clamp(32px, 3.5vw, 48px); font-weight: 900; line-height: 1.15; margin-bottom: 32px; }
+  .autor-bio { font-size: 17px; line-height: 1.9; color: #444; }
   .autor-bio p + p { margin-top: 20px; }
+  .autor-social { display: flex; align-items: center; gap: 12px; margin-top: 32px; }
+  .autor-social-label { font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 2px; color: var(--gray); text-transform: uppercase; }
+  .autor-social-link { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--red); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+  .autor-social-link:hover { border-color: var(--red); }
 
-  /* ─── FINAL CTA ─── */
-  .final-cta {
-    background: var(--red);
-    padding: 100px 80px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
+  /* DOAÇÃO SECTION */
+  .doacao { background: var(--ink); padding: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .doacao-label { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 5px; color: rgba(255,255,255,0.3); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+  .doacao-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+  .doacao-heading { font-family: 'Playfair Display', serif; font-size: clamp(32px, 3.5vw, 48px); font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 24px; }
+  .doacao-heading em { font-style: italic; color: var(--red); }
+  .doacao-body { font-size: 17px; line-height: 1.9; color: rgba(255,255,255,0.5); }
+  .doacao-body p + p { margin-top: 16px; }
+  .doacao-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .doacao-stat { padding: 40px 36px; border: 1px solid rgba(255,255,255,0.06); text-align: center; }
+  .doacao-stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: var(--red); line-height: 1; margin-bottom: 8px; }
+  .doacao-stat-label { font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(255,255,255,0.35); letter-spacing: 0.5px; line-height: 1.5; }
 
-  .final-cta::before {
-    content: 'DOR';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 360px;
-    color: rgba(0,0,0,0.08);
-    white-space: nowrap;
-    user-select: none;
-    line-height: 1;
-  }
+  /* FINAL CTA */
+  .final-cta { background: var(--red); padding: 100px 80px; text-align: center; position: relative; overflow: hidden; }
+  .final-cta::before { content: 'DOR'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Bebas Neue', sans-serif; font-size: 360px; color: rgba(0,0,0,0.08); white-space: nowrap; user-select: none; line-height: 1; }
+  .final-cta-label { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 5px; color: rgba(255,255,255,0.6); margin-bottom: 24px; }
+  .final-cta-heading { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 64px); font-style: italic; color: #fff; margin-bottom: 16px; line-height: 1.2; position: relative; z-index: 2; }
+  .final-cta-sub { font-family: 'DM Sans', sans-serif; font-size: 15px; color: rgba(255,255,255,0.7); margin-bottom: 48px; position: relative; z-index: 2; }
+  .btn-white { display: inline-block; background: #fff; color: var(--red); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; padding: 20px 60px; position: relative; z-index: 2; transition: transform 0.2s, box-shadow 0.2s; }
+  .btn-white:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.2); }
 
-  .final-cta-label {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 12px;
-    letter-spacing: 5px;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 24px;
-  }
+  /* FOOTER */
+  footer { background: var(--ink); padding: 32px 80px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); }
+  .footer-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: rgba(255,255,255,0.4); letter-spacing: 2px; }
+  .footer-isbn { font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(255,255,255,0.25); letter-spacing: 1px; }
 
-  .final-cta-heading {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(36px, 5vw, 64px);
-    font-style: italic;
-    color: #fff;
-    margin-bottom: 48px;
-    line-height: 1.2;
-    position: relative;
-    z-index: 2;
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  .btn-white {
-    display: inline-block;
-    background: #fff;
-    color: var(--red);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 20px 60px;
-    position: relative;
-    z-index: 2;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .btn-white:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.2);
-  }
-
-  /* ─── FOOTER ─── */
-  footer {
-    background: var(--ink);
-    padding: 32px 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .footer-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 2px;
-  }
-
-  .footer-isbn {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    color: rgba(255,255,255,0.25);
-    letter-spacing: 1px;
-  }
-
-  /* ─── ANIMATIONS ─── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-
-  /* ─── SCROLL REVEAL ─── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ─── RESPONSIVE ─── */
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; min-height: auto; }
     .hero-left { padding: 60px 32px; }
-    .hero-right {
-      clip-path: none;
-      padding: 60px 32px;
-      min-height: 380px;
-    }
-    .book-cover-wrap { padding: 0; }
-    .book-cover-img { width: 180px; }
+    .hero-right { clip-path: none; padding: 60px 32px; min-height: 420px; }
+    .doacao-strip { padding: 16px 32px; }
     .cta-strip { flex-direction: column; padding: 48px 32px; text-align: center; }
     .sinopse { grid-template-columns: 1fr; padding: 80px 32px; gap: 40px; }
-    .frases-grid { grid-template-columns: 1fr; }
+    .partes-grid { grid-template-columns: 1fr; }
+    .nao-e { padding: 80px 32px; }
+    .nao-e-grid { grid-template-columns: 1fr; }
     .frases { padding: 80px 32px; }
+    .frases-grid { grid-template-columns: 1fr; gap: 16px; }
     .autor { grid-template-columns: 1fr; padding: 80px 32px; }
     .autor-img-wrap { display: none; }
+    .doacao { grid-template-columns: 1fr; padding: 80px 32px; gap: 48px; }
+    .doacao-stats { grid-template-columns: 1fr 1fr; }
     .final-cta { padding: 80px 32px; }
     footer { flex-direction: column; gap: 8px; padding: 32px; text-align: center; }
   }
@@ -509,19 +161,13 @@
 </head>
 <body>
 
-<!-- ─── HERO ─── -->
 <section class="hero">
   <div class="hero-left">
     <p class="hero-eyebrow">Crônicas · Literatura Brasileira</p>
-    <h1 class="hero-title">
-      A DOR<br>
-      <span class="red">QUE EU</span><br>
-      TRANSFORMEI
-    </h1>
+    <h1 class="hero-title">A DOR<br><span class="red">QUE EU</span><br>TRANSFORMEI</h1>
     <p class="hero-subtitle">em palavras</p>
-    <p class="hero-desc">
-      Uma coletânea de crônicas que navega pelos territórios mais íntimos da experiência humana — o amor que fere, o tempo que transforma, e o luto que ensina.
-    </p>
+    <p class="hero-desc">Há dores que não cabem no silêncio. Este livro nasceu delas.</p>
+    <a href="https://loja.uiclap.com/titulo/ua126934" target="_blank" class="hero-cta">Adquirir o livro →</a>
     <div class="hero-author">
       <div class="author-line"></div>
       <span class="author-name">Deric Mateus Balbino Ramos</span>
@@ -530,117 +176,168 @@
   <div class="hero-right">
     <div class="hero-right-text">DOR</div>
     <div class="book-cover-wrap">
-      <img class="book-cover-img" src="capa-deric.jpg" alt="Capa do livro A Dor que Eu Transformei em Palavras">
+      <div class="book-3d">
+        <div class="book-spine"><span class="book-spine-text">A DOR QUE EU TRANSFORMEI EM PALAVRAS · DERIC MATEUS</span></div>
+        <div class="book-face"><img src="capa-deric.jpg" alt="Capa do livro A Dor que Eu Transformei em Palavras"></div>
+        <div class="book-shadow"></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ─── CTA STRIP ─── -->
-<div class="cta-strip">
-  <p class="cta-strip-text">
-    "Porque escrever não é apenas contar histórias.<br>
-    <strong>É sobreviver a elas."</strong>
-  </p>
-  <a href="https://www.uiclap.com" target="_blank" class="btn-primary">Adquirir o livro →</a>
+<div class="doacao-strip">
+  <p class="doacao-strip-text">♥ &nbsp;<strong>100% dos royalties são doados.</strong> Cada livro vendido transforma vidas — o autor não fica com nenhum lucro.&nbsp; ♥</p>
 </div>
 
-<!-- ─── SINOPSE ─── -->
+<div class="cta-strip">
+  <p class="cta-strip-text">"Porque escrever não é apenas contar histórias.<br><strong>É sobreviver a elas."</strong></p>
+  <a href="https://loja.uiclap.com/titulo/ua126934" target="_blank" class="btn-primary">Adquirir o livro →</a>
+</div>
+
 <section class="sinopse">
   <div class="sinopse-left reveal">
     <p class="section-label">Sobre o livro</p>
-    <h2 class="sinopse-heading">
-      Algumas dores não precisam ser<br>
-      superadas — apenas<br>
-      <em>transformadas.</em>
-    </h2>
+    <h2 class="sinopse-heading">Algumas dores não precisam ser superadas — apenas <em>transformadas.</em></h2>
+    <img src="deric-autor.jpg" alt="Deric Mateus Balbino Ramos" class="sinopse-autor-foto">
   </div>
   <div class="sinopse-right reveal">
     <div class="sinopse-body">
-      <p>
-        Há dores que não cabem no silêncio. Este livro nasceu delas.
-      </p>
-      <p>
-        Em <em>"A Dor que Eu Transformei em Palavras"</em>, Deric Mateus Balbino Ramos apresenta uma coleção de textos profundamente pessoais, divididos em cinco partes que exploram os sentimentos que nos definem enquanto humanos.
-      </p>
-      <p>
-        Da Parte 1, onde o autor reflete sobre amores que partem e corações que aprendem a se proteger, até a comovente Parte 5 — um tributo emocionante à sua avó Dona Daria —, cada crônica é um mergulho na essência do que significa sentir.
-      </p>
-      <p>
-        Entre personagens reais e fictícios, como Clarinha, Seu Jorge, Karlisson e Manuela, o leitor encontrará reflexões sobre o tempo que não para, a infância que ficou para trás, e a difícil arte de transformar dor em cura.
-      </p>
-      <p>
-        Com uma voz autoral marcada pela vulnerabilidade e pela poesia, este livro é um convite para aqueles que não têm medo de sentir. Para quem entende que toda ferida tem um limite de silêncio. Para quem sabe que a escrita pode ser o remédio que a medicina nunca inventou.
-      </p>
-      <p>
-        Este livro é para você que já chorou em silêncio, amou sem ser correspondido, perdeu quem amava, e mesmo assim, continuou. Porque enquanto houver palavras, haverá cura.
-      </p>
+      <p>Em <em>"A Dor que Eu Transformei em Palavras"</em>, Deric Mateus Balbino Ramos apresenta 69 crônicas profundamente pessoais, divididas em cinco partes que exploram os sentimentos que nos definem enquanto humanos.</p>
+      <div class="partes-grid">
+        <div class="parte-item"><span class="parte-num">Parte 1</span><span class="parte-desc">Sentimentos que pulsam — amores que partem e corações que aprendem a se proteger</span></div>
+        <div class="parte-item"><span class="parte-num">Parte 2</span><span class="parte-desc">Devaneios e reflexões — cenas sinceras da vida nos momentos de chegada e partida</span></div>
+        <div class="parte-item"><span class="parte-num">Parte 3</span><span class="parte-desc">O tempo e as mudanças — sobre ciclos, crescimento e o que o tempo revela</span></div>
+        <div class="parte-item"><span class="parte-num">Parte 4</span><span class="parte-desc">Personagens — histórias reais e fictícias de quem cruzou o caminho do autor</span></div>
+        <div class="parte-item" style="grid-column: 1 / -1;"><span class="parte-num">Parte 5</span><span class="parte-desc">Para minha querida e eterna avó, Dona Daria — o tributo mais íntimo do livro, sobre luto, amor e despedida</span></div>
+      </div>
+      <p>Este livro é para você que já chorou em silêncio, amou sem ser correspondido, perdeu quem amava, e mesmo assim, continuou. Porque enquanto houver palavras, haverá cura.</p>
     </div>
   </div>
 </section>
 
-<!-- ─── FRASES ─── -->
+<section class="nao-e">
+  <div class="nao-e-header reveal">
+    <p class="nao-e-label">Uma advertência honesta</p>
+    <h2 class="nao-e-heading">Este livro <span>não é</span> para todo mundo.</h2>
+  </div>
+  <div class="nao-e-grid">
+    <div class="nao-e-card reveal">
+      <p class="nao-e-title">Quem foge da própria história</p>
+      <p class="nao-e-desc">Se você prefere não olhar para dentro, essas páginas vão incomodar. E muito.</p>
+    </div>
+    <div class="nao-e-card reveal" style="transition-delay:0.1s">
+      <p class="nao-e-title">Quem acha que dor é fraqueza</p>
+      <p class="nao-e-desc">Aqui, vulnerabilidade é a única linguagem. Se isso te envergonha, não continue.</p>
+    </div>
+    <div class="nao-e-card reveal" style="transition-delay:0.2s">
+      <p class="nao-e-title">Quem busca respostas prontas</p>
+      <p class="nao-e-desc">Este livro não resolve nada. Ele só te mostra que você não está sozinho na bagunça.</p>
+    </div>
+    <div class="nao-e-card reveal" style="transition-delay:0.3s">
+      <p class="nao-e-title">Quem já "superou tudo"</p>
+      <p class="nao-e-desc">Se você nunca mais sentiu saudade, nunca mais chorou — parabéns. Você não precisa disso.</p>
+    </div>
+    <div class="nao-e-card reveal" style="transition-delay:0.4s">
+      <p class="nao-e-title">Quem lê só para impressionar</p>
+      <p class="nao-e-desc">Essas crônicas não foram escritas para impressionar. Foram escritas para libertar.</p>
+    </div>
+    <div class="nao-e-card reveal" style="transition-delay:0.5s">
+      <p class="nao-e-title">Quem tem medo de sentir</p>
+      <p class="nao-e-desc">Porque aqui, a dor não é o inimigo. É a matéria-prima de tudo.</p>
+    </div>
+  </div>
+  <div class="nao-e-footer reveal">
+    <p class="nao-e-footer-text">Mas se você ainda carrega algo que não sabe como nomear —<br><strong>este livro foi escrito para você.</strong></p>
+    <a href="https://loja.uiclap.com/titulo/ua126934" target="_blank" class="btn-primary">Quero esse livro →</a>
+  </div>
+</section>
+
 <section class="frases">
+  <div class="frases-header reveal">
+    <p class="frases-header-label">Do livro</p>
+    <h2 class="frases-header-title">As palavras que ficaram.<br><em>E que não pedem licença.</em></h2>
+  </div>
   <div class="frases-grid">
     <div class="frase-card reveal">
       <p class="frase-text">Toda ferida tem um limite de silêncio.</p>
+      <p class="frase-author">— Deric Mateus</p>
     </div>
-    <div class="frase-card reveal" style="transition-delay: 0.15s">
+    <div class="frase-card reveal" style="transition-delay:0.15s">
       <p class="frase-text">O luto começa antes da partida, no medo de que ela aconteça.</p>
+      <p class="frase-author">— Deric Mateus</p>
     </div>
-    <div class="frase-card reveal" style="transition-delay: 0.3s">
+    <div class="frase-card reveal" style="transition-delay:0.3s">
       <p class="frase-text">Porque escrever não é apenas contar histórias. É sobreviver a elas.</p>
+      <p class="frase-author">— Deric Mateus</p>
     </div>
   </div>
 </section>
 
-<!-- ─── AUTOR ─── -->
 <section class="autor">
   <div class="autor-img-wrap reveal">
-    <img class="autor-img" src="capa-deric.jpg" alt="Deric Mateus Balbino Ramos" style="object-fit:cover;height:400px;">
+    <img class="autor-img" src="deric-autor.jpg" alt="Deric Mateus Balbino Ramos">
   </div>
   <div class="autor-content">
     <p class="section-label">O autor</p>
     <h2 class="autor-heading reveal">Deric Mateus<br>Balbino Ramos</h2>
     <div class="autor-bio reveal">
-      <p>
-        Deric Mateus Balbino Ramos nasceu em junho de 2002, em Arapiraca, Alagoas. Escritor desde a adolescência, é autor de dezenas de crônicas que misturam poesia, reflexão e realidade emocional.
-      </p>
-      <p>
-        Sua escrita nasceu do luto e floresceu na coragem de transformar o que o feriu em arte. Escrever, para Deric, não é apenas um exercício literário — é um ato de sobrevivência, cura e libertação.
-      </p>
-      <p>
-        Hoje vive em Alphaville, São Paulo, atua em projetos criativos e segue compartilhando sua jornada através das palavras e das redes sociais.
-      </p>
+      <p>Deric Mateus Balbino Ramos nasceu em junho de 2002, em Arapiraca, Alagoas. Escritor desde a adolescência, é autor de dezenas de crônicas que misturam poesia, reflexão e realidade emocional.</p>
+      <p>Sua escrita nasceu do luto e floresceu na coragem de transformar o que o feriu em arte. Escrever, para Deric, não é apenas um exercício literário — é um ato de sobrevivência, cura e libertação.</p>
+      <p>Hoje vive em Alphaville, São Paulo, atua em projetos criativos na equipe do Bruno Avelar e Poder do Network, e segue compartilhando sua jornada através das palavras e das redes sociais.</p>
+    </div>
+    <div class="autor-social">
+      <span class="autor-social-label">Instagram</span>
+      <a href="https://instagram.com/odericmateus" target="_blank" class="autor-social-link">@odericmateus</a>
     </div>
   </div>
 </section>
 
-<!-- ─── FINAL CTA ─── -->
-<section class="final-cta">
-  <p class="final-cta-label">Disponível agora</p>
-  <h2 class="final-cta-heading">
-    Está pronto para<br>transformar sua dor?
-  </h2>
-  <a href="https://www.uiclap.com" target="_blank" class="btn-white">Comprar o livro</a>
+<section class="doacao">
+  <div class="reveal">
+    <p class="doacao-label">O propósito</p>
+    <h2 class="doacao-heading">Cada livro vendido<br><em>transforma uma vida.</em></h2>
+    <div class="doacao-body">
+      <p>Deric não fica com nenhum lucro das vendas. 100% dos royalties são integralmente doados para causas sociais — saúde mental, educação e inclusão social.</p>
+      <p>Comprar este livro não é apenas um ato literário. É um ato de impacto.</p>
+    </div>
+  </div>
+  <div class="doacao-stats reveal">
+    <div class="doacao-stat">
+      <p class="doacao-stat-number">100%</p>
+      <p class="doacao-stat-label">dos royalties doados para causas sociais</p>
+    </div>
+    <div class="doacao-stat">
+      <p class="doacao-stat-number">69</p>
+      <p class="doacao-stat-label">crônicas que nasceram da dor e viraram arte</p>
+    </div>
+    <div class="doacao-stat">
+      <p class="doacao-stat-number">5</p>
+      <p class="doacao-stat-label">partes temáticas de amor, tempo e luto</p>
+    </div>
+    <div class="doacao-stat">
+      <p class="doacao-stat-number">R$0</p>
+      <p class="doacao-stat-label">de lucro para o autor. Zero. Nenhum centavo.</p>
+    </div>
+  </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
+<section class="final-cta">
+  <p class="final-cta-label">Disponível agora</p>
+  <h2 class="final-cta-heading">Está pronto para<br>transformar sua dor?</h2>
+  <p class="final-cta-sub">Seu dinheiro vira arte. E arte vira impacto.</p>
+  <a href="https://loja.uiclap.com/titulo/ua126934" target="_blank" class="btn-white">Comprar o livro</a>
+</section>
+
 <footer>
   <span class="footer-title">A Dor que Eu Transformei em Palavras</span>
   <span class="footer-isbn">ISBN: 978-65-989414-0-6 · Deric Mateus Balbino Ramos · UICLAP</span>
 </footer>
 
 <script>
-  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
   reveals.forEach(r => observer.observe(r));
 </script>
 </body>
