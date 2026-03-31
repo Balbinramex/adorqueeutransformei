@@ -29,13 +29,13 @@
   .hero-right { position: relative; display: flex; align-items: center; justify-content: center; background: var(--ink); clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%); overflow: hidden; }
   .hero-right::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 60% 40%, #2a1a1a 0%, #0d0d0d 70%); }
   .book-cover-wrap { position: relative; z-index: 2; padding: 60px; opacity: 0; animation: fadeIn 1.2s 0.6s forwards; display: flex; align-items: center; justify-content: center; }
-  .book-3d { position: relative; width: 260px; height: 370px; transform-style: preserve-3d; transform: perspective(1200px) rotateY(-18deg) rotateX(3deg); transition: transform 0.5s ease; cursor: pointer; }
-  .book-3d:hover { transform: perspective(1200px) rotateY(-8deg) rotateX(1deg) scale(1.04); }
-  .book-face { position: absolute; width: 260px; height: 370px; top: 0; left: 0; }
-  .book-face img { width: 100%; height: 100%; object-fit: cover; display: block; box-shadow: -8px 8px 40px rgba(0,0,0,0.9), 4px 0 0 rgba(255,255,255,0.05) inset; }
-  .book-spine { position: absolute; width: 36px; height: 370px; top: 0; left: -36px; background: linear-gradient(to right, #111, #222); display: flex; align-items: center; justify-content: center; transform: skewY(0deg); }
-  .book-spine-text { font-family: 'Bebas Neue', sans-serif; font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.4); writing-mode: vertical-rl; transform: rotate(180deg); }
-  .book-shadow { position: absolute; bottom: -24px; left: 20px; width: 240px; height: 30px; background: radial-gradient(ellipse, rgba(0,0,0,0.7) 0%, transparent 70%); filter: blur(10px); }
+  .book-3d { position: relative; width: 360px; height: 510px; transform-style: preserve-3d; transform: perspective(1400px) rotateY(-18deg) rotateX(3deg); transition: transform 0.5s ease; cursor: pointer; }
+  .book-3d:hover { transform: perspective(1400px) rotateY(-8deg) rotateX(1deg) scale(1.04); }
+  .book-face { position: absolute; width: 360px; height: 510px; top: 0; left: 0; }
+  .book-face img { width: 100%; height: 100%; object-fit: cover; display: block; box-shadow: -10px 10px 50px rgba(0,0,0,0.95), 4px 0 0 rgba(255,255,255,0.05) inset; }
+  .book-spine { position: absolute; width: 44px; height: 510px; top: 0; left: -44px; background: linear-gradient(to right, #111, #222); display: flex; align-items: center; justify-content: center; }
+  .book-spine-text { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 2px; color: rgba(255,255,255,0.4); writing-mode: vertical-rl; transform: rotate(180deg); }
+  .book-shadow { position: absolute; bottom: -30px; left: 20px; width: 340px; height: 40px; background: radial-gradient(ellipse, rgba(0,0,0,0.8) 0%, transparent 70%); filter: blur(12px); }
   .hero-right-text { position: absolute; bottom: 40px; left: 40px; font-family: 'Bebas Neue', sans-serif; font-size: 140px; line-height: 1; color: rgba(255,255,255,0.03); z-index: 1; user-select: none; }
 
   /* DOAÇÃO STRIP */
