@@ -11,34 +11,208 @@
   :root { --ink: #0d0d0d; --paper: #f0ece4; --red: #c0392b; --gray: #6b6b6b; --light-gray: #d9d4c8; }
   html { scroll-behavior: smooth; }
   body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
-  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='https://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
 
-  /* HERO */
-  .hero { min-height: 100vh; display: grid; grid-template-columns: 45% 55%; position: relative; overflow: hidden; }
-  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px 48px 80px 80px; position: relative; z-index: 2; }
-  .hero-eyebrow { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 4px; color: var(--red); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
-  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(64px, 8vw, 108px); line-height: 0.9; letter-spacing: -1px; margin-bottom: 12px; opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  /* fundo gradiente dramático */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, #1a0505 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, #0a0000 0%, transparent 60%),
+      #0d0d0d;
+  }
+
+  /* palavra "DOR" fantasma no fundo */
+  .hero-bg-word {
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(200px, 28vw, 420px);
+    line-height: 1;
+    color: rgba(192,57,43,0.07);
+    user-select: none;
+    letter-spacing: -8px;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* conteúdo do hero */
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 40px 80px 80px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 5px;
+    color: var(--red);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(68px, 8.5vw, 116px);
+    line-height: 0.88;
+    letter-spacing: -2px;
+    color: #fff;
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.35s forwards;
+  }
+
   .hero-title .red { color: var(--red); }
-  .hero-subtitle { font-family: 'DM Sans', sans-serif; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 40px; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
-  .hero-desc { font-family: 'Playfair Display', serif; font-size: 17px; line-height: 1.8; color: #333; max-width: 420px; margin-bottom: 36px; opacity: 0; animation: fadeUp 0.8s 0.8s forwards; }
-  .hero-cta { display: inline-block; background: var(--red); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; padding: 18px 48px; margin-bottom: 36px; opacity: 0; animation: fadeUp 0.8s 0.9s forwards; transition: background 0.2s, transform 0.2s; align-self: flex-start; }
-  .hero-cta:hover { background: #a93226; transform: translateY(-2px); }
-  .hero-author { display: flex; align-items: center; gap: 16px; opacity: 0; animation: fadeUp 0.8s 1s forwards; }
-  .author-line { width: 40px; height: 1px; background: var(--red); }
-  .author-name { font-family: 'DM Sans', sans-serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
 
-  /* HERO RIGHT — livro dominando */
-  .hero-right { position: relative; display: flex; align-items: center; justify-content: center; background: var(--ink); clip-path: polygon(6% 0, 100% 0, 100% 100%, 0% 100%); overflow: hidden; }
-  .hero-right::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 55% 40%, #1e0a0a 0%, #0d0d0d 65%); }
-  .hero-right::after { content: 'DOR'; position: absolute; bottom: 20px; right: 40px; font-family: 'Bebas Neue', sans-serif; font-size: 200px; line-height: 1; color: rgba(192,57,43,0.06); user-select: none; z-index: 1; }
-  .book-cover-wrap { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; opacity: 0; animation: fadeIn 1.2s 0.5s forwards; padding: 48px 48px 48px 80px; }
-  .book-3d { position: relative; width: min(420px, 75%); aspect-ratio: 2/3; transform-style: preserve-3d; transform: perspective(1600px) rotateY(-16deg) rotateX(2deg); transition: transform 0.6s ease; cursor: pointer; filter: drop-shadow(-24px 32px 48px rgba(0,0,0,0.9)); }
-  .book-3d:hover { transform: perspective(1600px) rotateY(-6deg) rotateX(1deg) scale(1.03); }
-  .book-face { position: absolute; inset: 0; }
-  .book-face img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .book-spine { position: absolute; width: 48px; height: 100%; top: 0; left: -48px; background: linear-gradient(to right, #0a0a0a, #1e1e1e); display: flex; align-items: center; justify-content: center; }
-  .book-spine-text { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 2px; color: rgba(255,255,255,0.35); writing-mode: vertical-rl; transform: rotate(180deg); }
-  .book-shadow { position: absolute; bottom: -20px; left: 10px; right: 10px; height: 48px; background: radial-gradient(ellipse, rgba(0,0,0,0.9) 0%, transparent 70%); filter: blur(16px); }
+  .hero-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 44px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.55s forwards;
+  }
+
+  .hero-desc {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.6);
+    max-width: 400px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.75s forwards;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 20px 52px;
+    margin-bottom: 44px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s forwards;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    align-self: flex-start;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-cta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+  }
+
+  .hero-cta:hover { background: #a93226; transform: translateY(-3px); box-shadow: 0 20px 40px rgba(192,57,43,0.4); }
+
+  .hero-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.05s forwards;
+  }
+
+  .author-line { width: 40px; height: 1px; background: var(--red); }
+
+  .author-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* LIVRO GIGANTE — quebra a linha do meio */
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: visible;
+  }
+
+  .book-float {
+    position: relative;
+    z-index: 4;
+    opacity: 0;
+    animation: bookEntrance 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    /* livro sai para a esquerda quebrando a divisão */
+    margin-left: -120px;
+  }
+
+  .book-float img {
+    width: clamp(400px, 50vw, 680px);
+    height: auto;
+    display: block;
+    filter:
+      drop-shadow(-40px 60px 80px rgba(0,0,0,0.95))
+      drop-shadow(-8px 16px 32px rgba(192,57,43,0.15));
+    transition: filter 0.5s ease, transform 0.5s ease;
+  }
+
+  .book-float:hover img {
+    filter:
+      drop-shadow(-50px 70px 90px rgba(0,0,0,0.95))
+      drop-shadow(-12px 20px 40px rgba(192,57,43,0.25));
+    transform: translateY(-8px) rotate(-1deg);
+  }
+
+  /* luz vermelha atrás do livro */
+  .book-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-60%, -50%);
+    width: 500px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(192,57,43,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  @keyframes bookEntrance {
+    from { opacity: 0; transform: translateY(60px) rotate(3deg); }
+    to   { opacity: 1; transform: translateY(0) rotate(0deg); }
+  }
 
   /* DOAÇÃO STRIP */
   .doacao-strip { background: var(--red); padding: 18px 80px; display: flex; align-items: center; justify-content: center; gap: 16px; }
@@ -141,9 +315,12 @@
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-left { padding: 60px 32px; }
-    .hero-right { clip-path: none; padding: 60px 32px; min-height: 420px; }
+    .hero-content { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 60px 32px 40px; }
+    .hero-right { height: 60vw; min-height: 320px; overflow: hidden; }
+    .book-float { margin-left: 0; }
+    .book-float img { width: 70vw; max-width: 320px; }
+    .hero-bg-word { font-size: 40vw; }
     .doacao-strip { padding: 16px 32px; }
     .cta-strip { flex-direction: column; padding: 48px 32px; text-align: center; }
     .sinopse { grid-template-columns: 1fr; padding: 80px 32px; gap: 40px; }
@@ -164,23 +341,23 @@
 <body>
 
 <section class="hero">
-  <div class="hero-left">
-    <p class="hero-eyebrow">Crônicas · Literatura Brasileira</p>
-    <h1 class="hero-title">A DOR<br><span class="red">QUE EU</span><br>TRANSFORMEI</h1>
-    <p class="hero-subtitle">em palavras</p>
-    <p class="hero-desc">Há dores que não cabem no silêncio. Este livro nasceu delas.</p>
-    <a href="https://loja.uiclap.com/titulo/ua126934" target="_blank" class="hero-cta">Adquirir o livro →</a>
-    <div class="hero-author">
-      <div class="author-line"></div>
-      <span class="author-name">Deric Mateus Balbino Ramos</span>
+  <div class="hero-bg-word">DOR</div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Crônicas · Literatura Brasileira</p>
+      <h1 class="hero-title">A DOR<br><span class="red">QUE EU</span><br>TRANSFORMEI</h1>
+      <p class="hero-subtitle">em palavras</p>
+      <p class="hero-desc">Há dores que não cabem no silêncio. Este livro nasceu delas.</p>
+      <a href="https://loja.uiclap.com/titulo/ua126934" target="_blank" class="hero-cta">Adquirir o livro →</a>
+      <div class="hero-author">
+        <div class="author-line"></div>
+        <span class="author-name">Deric Mateus Balbino Ramos</span>
+      </div>
     </div>
-  </div>
-  <div class="hero-right">
-    <div class="book-cover-wrap">
-      <div class="book-3d">
-        <div class="book-spine"><span class="book-spine-text">A DOR QUE EU TRANSFORMEI EM PALAVRAS · DERIC MATEUS</span></div>
-        <div class="book-face"><img src="capa-deric.jpg" alt="Capa do livro A Dor que Eu Transformei em Palavras"></div>
-        <div class="book-shadow"></div>
+    <div class="hero-right">
+      <div class="book-glow"></div>
+      <div class="book-float">
+        <img src="capa-3d.png" alt="A Dor que Eu Transformei em Palavras">
       </div>
     </div>
   </div>
